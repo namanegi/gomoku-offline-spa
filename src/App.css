@@ -1,3 +1,34 @@
+#board {
+  width: 500px;
+  height: 500px;
+}
+
+.cell {
+  margin: 0;
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  background: url('Drawing.png');
+}
+
+.white-chess {
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  margin: 20px;
+  border-radius: 50%;
+  background-color: azure;
+}
+
+.black-chess {
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  margin: 20px;
+  border-radius: 50%;
+  background-color: black;
+}
+
 .App {
   text-align: center;
 }
