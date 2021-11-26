@@ -1,31 +1,32 @@
 #board {
-  width: 800px;
-  height: 800px;
+  width: 600px;
+  height: 600px;
   font-size: 0;
+  margin: auto;
 }
 
 .cell {
   margin: 0;
   display: inline-block;
-  width: 100px;
-  height: 100px;
+  width: 50px;
+  height: 50px;
   background: url('Drawing.png');
 }
 
 .white-chess {
   display: inline-block;
-  width: 60px;
-  height: 60px;
-  margin: 20px;
+  width: 30px;
+  height: 30px;
+  margin: 10px;
   border-radius: 50%;
   background-color: azure;
 }
 
 .black-chess {
   display: inline-block;
-  width: 60px;
-  height: 60px;
-  margin: 20px;
+  width: 30px;
+  height: 30px;
+  margin: 10px;
   border-radius: 50%;
   background-color: black;
 }

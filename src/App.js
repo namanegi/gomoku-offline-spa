@@ -56,7 +56,7 @@ const ResultScreen = (props) => {
 } 
 
 const App = () => {
-  const scale = 8
+  const scale = 12
   let initBoard = []
   for (let i=0;i<scale;i++) {
     let row = []
