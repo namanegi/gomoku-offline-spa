@@ -12,6 +12,8 @@ const Chess = (props) => {
   )
 }
 
+const Button = ({val, nm, clEvent}) => <button onClick={() => clEvent()} id={nm}>{val}</button>
+
 const PrintCell = (props) => {
   return (
     <div className="cell" onClick={() => props.clEvent(props.x, props.y)}>
@@ -56,7 +58,7 @@ const ResultScreen = (props) => {
       <div id="result">
         <div id="result_text">{props.player}</div>
         <div id="restart">
-          <button id="rt_but" onClick={() => window.location.reload()}>Restart</button>
+          <Button val={"Restart"} clEvent={props.clEvent} nm={"rt_but"}/>
         </div>
       </div>
     </div>
@@ -124,10 +126,16 @@ const App = () => {
     }
   }
 
+  const resetBoard = () => {
+    setCb(initBoard)
+    setT("1")
+    setRes("0")
+  }
+
   return (
     <>
       <PrintBoard board={cb} turn={t} clEvent={playChess} scale={scale}/>
-      <ResultScreen player={res} />
+      <ResultScreen player={res} clEvent={resetBoard}/>
     </>
   );
 }
