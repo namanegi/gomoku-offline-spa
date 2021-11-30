@@ -4,8 +4,8 @@ import { useState } from 'react';
 const Chess = (props) => {
   const classType = {
     "0": "plain",
-    "1": "white-chess",
-    "2": "black-chess"
+    "1": "white chess",
+    "2": "black chess"
   }
   return (
     <span className={classType[props.value]} />
@@ -49,8 +49,10 @@ const ResultScreen = (props) => {
     <div id="result_back" className={endCheck[props.player]}>
       <div id="result">
         <div id="result_text">{props.player}</div>
+        <div id="restart">
+          <button id="rt_but" onClick={() => window.location.reload()}>Restart</button>
+        </div>
       </div>
-      <div id="restart"></div>
     </div>
   )
 } 
@@ -68,35 +70,31 @@ const App = () => {
 
   const [cb, setCb] = useState(initBoard)
   const [t, setT] = useState(1)
+  const [res, setRes] = useState(0)
 
   const playChess = (x, y) => {
     if (cb[x][y] === "0") {
       let newBoard = cb.map((el) => el)
       newBoard[x][y] = String(t)
       let newTurn = 0
+      let newRes = 1
       if (t === 1) {
         newTurn = 2
       } else {
         newTurn = 1
       }
+
+
       setCb(newBoard)
       setT(newTurn)
+      setRes(newRes)
     }
-  }
-
-  const checkWin = (board, turn) => {
-    console.log(board, turn)
-    let res = 0
-    //胜利判定写在这里，玩家1胜利的话返回1，2胜利的话返回2
-    //游戏没有结束返回0
-    //棋盘下满了不分胜负返回3
-    return res
   }
 
   return (
     <>
       <PrintBoard board={cb} turn={t} clEvent={playChess}/>
-      <ResultScreen player={checkWin(cb, t)} />
+      <ResultScreen player={res} />
     </>
   );
 }
