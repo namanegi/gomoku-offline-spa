@@ -21,8 +21,14 @@ const PrintCell = (props) => {
 }
 
 const PrintBoard = (props) => {
+  const sz = props.scale * 50
+  const st = {
+    width: sz + "px",
+    height: sz + "px"
+  }
+  console.log(st)
   return (
-    <div id="board">
+    <div id="board" style={st}>
       {
         props.board.map((element, i) => {
           return (
@@ -40,10 +46,10 @@ const PrintBoard = (props) => {
 
 const ResultScreen = (props) => {
   const endCheck = {
-    0: "not_end",
-    1: "end",
-    2: "end",
-    3: "end"
+    "0": "not_end",
+    "1": "end",
+    "2": "end",
+    "3": "end"
   }
   return (
     <div id="result_back" className={endCheck[props.player]}>
@@ -58,7 +64,7 @@ const ResultScreen = (props) => {
 } 
 
 const App = () => {
-  const scale = 12
+  const scale = 14
   let initBoard = []
   for (let i=0;i<scale;i++) {
     let row = []
@@ -69,21 +75,48 @@ const App = () => {
   }
 
   const [cb, setCb] = useState(initBoard)
-  const [t, setT] = useState(1)
+  const [t, setT] = useState("1")
   const [res, setRes] = useState(0)
 
   const playChess = (x, y) => {
     if (cb[x][y] === "0") {
       let newBoard = cb.map((el) => el)
-      newBoard[x][y] = String(t)
-      let newTurn = 0
-      let newRes = 1
-      if (t === 1) {
-        newTurn = 2
+      newBoard[x][y] = t
+      let newTurn = "0"
+      let newRes = "0"
+      if (t === "1") {
+        newTurn = "2"
       } else {
-        newTurn = 1
+        newTurn = "1"
       }
 
+      const ref = t.repeat(5)
+      console.log(ref)
+      let check_win = ["", "", "", ""]
+      for (let i=-4;i<=4;i++) {
+        if ((0 <= x+i) && (x+i < scale)) {
+          check_win[0] = check_win[0] + cb[x+i][y]
+        }
+        if ((0 <= y+i) && (y+i < scale)) {
+          check_win[1] = check_win[1] + cb[x][y+i]
+        }
+        if ((0 <= x+i) && (x+i < scale) && (0 <= y+i) && (y+i < scale)) {
+          check_win[2] = check_win[2] + cb[x+i][y+i]
+        }
+        if ((0 <= x+i) && (x+i < scale) && (0 <= y-i) && (y-i < scale)) {
+          check_win[3] = check_win[3] + cb[x+i][y-i]
+        }
+      }
+      console.log(check_win)
+      check_win.forEach(it => {
+        if (it.includes(ref)) {
+          newRes = t
+        }
+      })
+      const ct = cb.map(row => row.filter(it => it === "0").length).reduce((sum, it) => sum+it)
+      if ((newRes === "0") && (ct === 0)) {
+        newRes = "3"
+      }
 
       setCb(newBoard)
       setT(newTurn)
@@ -93,7 +126,7 @@ const App = () => {
 
   return (
     <>
-      <PrintBoard board={cb} turn={t} clEvent={playChess}/>
+      <PrintBoard board={cb} turn={t} clEvent={playChess} scale={scale}/>
       <ResultScreen player={res} />
     </>
   );
